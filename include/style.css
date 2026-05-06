@@ -1,5 +1,88 @@
 
 /* ===========================
+   VARIABLES GLOBALES
+=========================== */
+:root {
+    /* Couleurs de base */
+    --bg: #f1f5f9;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+
+    /* Texte */
+    --text: #1e293b;
+    --muted: #94a3b8;
+
+    /* Accent (bleu) */
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+
+    /* États */
+    --danger: #dc2626;
+    --success: #16a34a;
+
+    /* UI */
+    --radius: 8px;
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+
+    /* Typo */
+    --font: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Reset de base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+}
+/* ===========================
+   PAGE CONNEXION (login.php)
+=========================== */
+
+/* Centrage vertical/horizontal de la card */
+body:has(.card) {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    margin: 0;
+}
+
+/* Carte principale */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    width: 100%;
+    max-width: 420px;
+}
+
+/* En-tête de la carte */
+.card-header {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.card-header h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+}
+
+.card-header p {
+    font-size: 0.875rem;
+    color: var(--muted);
+}
+/* ===========================
    FORMULAIRE
 =========================== */
 .form-group {
@@ -66,4 +149,198 @@ input::placeholder {
 
 .btn-primary:active {
     opacity: 0.9;
+}
+/* ===========================
+   MESSAGES D'ALERTE
+=========================== */
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid transparent;
+}
+ 
+.alert-error {
+    background-color: #fef2f2;
+    border-color: #fecaca;
+    color: var(--danger);
+}
+ 
+.alert-success {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+    color: var(--success);
+}
+ /* ===========================
+   HEADER
+=========================== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    z-index: 100;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+ 
+/* Logo */
+.header-logo img {
+    height: 36px;
+    width: auto;
+    display: block;
+}
+ 
+.logo-placeholder {
+    height: 36px;
+    width: 80px;
+    background: var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+}
+ 
+/* Titre */
+.header-title h1 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+}
+ 
+/* Actions droite */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+ 
+/* Boutons icône */
+.header-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.75rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    color: var(--muted);
+    transition: background 0.15s, color 0.15s;
+    user-select: none;
+}
+ 
+.header-btn:hover {
+    background: var(--bg);
+    color: var(--text);
+}
+ 
+.profile-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text);
+}
+ 
+/* Badge notification */
+.notif-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: var(--danger);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+}
+ 
+/* Dropdowns */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    min-width: 200px;
+    z-index: 200;
+    overflow: hidden;
+}
+ 
+.dropdown.open {
+    display: block;
+}
+ 
+.dropdown-header {
+    padding: 0.65rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border);
+}
+ 
+.dropdown-empty {
+    padding: 1rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+    text-align: center;
+}
+ 
+.dropdown-item {
+    display: block;
+    padding: 0.65rem 1rem;
+    font-size: 0.875rem;
+    color: var(--text);
+    text-decoration: none;
+    transition: background 0.12s;
+    cursor: pointer;
+}
+ 
+.dropdown-item:hover {
+    background: var(--bg);
+}
+ 
+.dropdown-item small {
+    display: block;
+    color: var(--muted);
+    font-size: 0.75rem;
+    margin-top: 2px;
+}
+ 
+.dropdown-divider {
+    border-top: 1px solid var(--border);
+    margin: 0.25rem 0;
+}
+ 
+.dropdown-item--danger {
+    color: var(--danger);
+}
+ 
+.dropdown-item--danger:hover {
+    background: #fef2f2;
+}
+ 
+/* Décaler le contenu sous le header fixe */
+body.has-header {
+    padding-top: 60px;
 }
