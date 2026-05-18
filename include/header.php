@@ -22,7 +22,9 @@ $notif_count = count($notifications);
 
     <!-- LOGO -->
     <div class="header-logo">
+        <a href="./accueil.php">
         <img src="./image/logo.png" alt="Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        </a>
         <div class="logo-placeholder" style="display:none">LOGO</div>
     </div>
 
