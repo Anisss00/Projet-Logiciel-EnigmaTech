@@ -75,11 +75,11 @@ $notif_count = count($notifications);
             <!-- DROPDOWN PROFIL -->
             <div class="dropdown profile-dropdown" id="profileDropdown">
                 <div class="dropdown-header">
-                    <?= htmlspecialchars($_SESSION['user_nom'] ?? 'Utilisateur') ?>
+                    <?= htmlspecialchars($_SESSION['user_nom'] ?? 'Utilisateur') ?></br>
+                    Rôle</br>
+                    Entreprise</br>
                 </div>
-                <a class="dropdown-item" href="profil.php">Mon profil</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item dropdown-item--danger" href="logout.php">Se déconnecter</a>
+                <a class="dropdown-item dropdown-item--danger" href="./include/logout.php">Se déconnecter</a>
             </div>
         </div>
 
