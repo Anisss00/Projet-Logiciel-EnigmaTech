@@ -150,6 +150,7 @@ input::placeholder {
 .btn-primary:active {
     opacity: 0.9;
 }
+
 /* ===========================
    MESSAGES D'ALERTE
 =========================== */
@@ -193,7 +194,7 @@ input::placeholder {
  
 /* Logo */
 .header-logo img {
-    height: 36px;
+    height: 35px;
     width: auto;
     display: block;
 }
@@ -269,6 +270,14 @@ input::placeholder {
     justify-content: center;
     padding: 0 3px;
 }
+.header-btn img {
+    opacity: 0.5;
+    transition: opacity 0.15s;
+}
+
+.header-btn:hover img {
+    opacity: 1;
+}
  
 /* Dropdowns */
 .dropdown {
@@ -343,4 +352,65 @@ input::placeholder {
 /* Décaler le contenu sous le header fixe */
 body.has-header {
     padding-top: 60px;
+}
+
+
+.jeux-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    padding: 1.5rem;
+}
+
+.jeu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.jeu-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    transform: translateY(-3px);
+}
+
+.jeu-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.jeu-card p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.jeu-card span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .jeux-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+    .jeux-grid { grid-template-columns: 1fr; }
 }
