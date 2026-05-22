@@ -12,17 +12,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Veuillez remplir tous les champs.";
     } else {
         // Requête préparée pour éviter les injections SQL
-        $stmt = $conn->prepare("SELECT id, nom, mdp FROM utilisateur WHERE mail = ?");
+        $stmt = $conn->prepare("SELECT id, nom, role, mdp FROM utilisateur WHERE mail = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($result->num_rows === 1) {
-            $user = mysqli_fetch_array($result, MYSQLI_BOTH);
+            $user = mysqli_fetch_array($result);
             if (password_verify($password, $user['mdp'])) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_nom'] = $user['nom'];
-                header("Location: accueil.php");
+                $_SESSION['user_role'] = $user['role'];
+                header("Location: index.php");
                 exit();
             } else {
                 $error = "Email ou mot de passe incorrect.";

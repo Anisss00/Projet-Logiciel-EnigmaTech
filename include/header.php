@@ -22,7 +22,7 @@ $notif_count = count($notifications);
 
     <!-- LOGO -->
     <div class="header-logo">
-        <a href="./accueil.php">
+        <a href="./index.php">
         <img src="./image/logo.png" alt="Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
         </a>
         <div class="logo-placeholder" style="display:none">LOGO</div>
@@ -38,11 +38,7 @@ $notif_count = count($notifications);
 
         <!-- CLOCHE NOTIFICATIONS -->
         <div class="header-btn notif-wrapper" id="notifToggle" title="Notifications">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-            </svg>
+            <img src="./image/cloche.png" alt="Notifications" width="20" height="20" style="display:block;">
             <?php if ($notif_count > 0): ?>
                 <span class="notif-badge"><?= $notif_count ?></span>
             <?php endif; ?>
@@ -65,11 +61,7 @@ $notif_count = count($notifications);
 
         <!-- PROFIL UTILISATEUR -->
         <div class="header-btn profile-wrapper" id="profileToggle" title="Mon profil">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="8" r="4"/>
-                <path d="M20 21a8 8 0 1 0-16 0"/>
-            </svg>
+            <img src="./image/profils.png" alt="Profil" width="20" height="20" style="display:block;">
             <?php if (!empty($_SESSION['user_nom'])): ?>
                 <span class="profile-name"><?= htmlspecialchars($_SESSION['user_nom']) ?></span>
             <?php endif; ?>
@@ -78,9 +70,13 @@ $notif_count = count($notifications);
             <div class="dropdown profile-dropdown" id="profileDropdown">
                 <div class="dropdown-header">
                     <?= htmlspecialchars($_SESSION['user_nom'] ?? 'Utilisateur') ?></br>
-                    Rôle</br>
+                    <?= htmlspecialchars($_SESSION['user_role'] ?? 'Utilisateur') ?></br>
                     Entreprise</br>
                 </div>
+                <?php if ($_SESSION['user_role'] === 'admin') { ?>
+                    <a class="dropdown-item" href="./admin.php">Administration</a>
+                    <div class="dropdown-divider"></div>
+                <?php } ?>
                 <a class="dropdown-item dropdown-item--danger" href="./include/logout.php">Se déconnecter</a>
             </div>
         </div>
