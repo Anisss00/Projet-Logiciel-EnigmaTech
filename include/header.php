@@ -71,9 +71,9 @@ $notif_count = count($notifications);
                 <div class="dropdown-header">
                     <?= htmlspecialchars($_SESSION['user_nom'] ?? 'Utilisateur') ?></br>
                     <?= htmlspecialchars($_SESSION['user_role'] ?? 'Utilisateur') ?></br>
-                    Entreprise</br>
+                    <?= htmlspecialchars($_SESSION['user_societe'] ?? 'Utilisateur') ?></br>
                 </div>
-                <?php if ($_SESSION['user_role'] === 'admin') { ?>
+                <?php if ($_SESSION['user_role'] === 'Admin' or $_SESSION['user_role'] === 'Opérateur') { ?>
                     <a class="dropdown-item" href="./admin.php">Administration</a>
                     <div class="dropdown-divider"></div>
                 <?php } ?>

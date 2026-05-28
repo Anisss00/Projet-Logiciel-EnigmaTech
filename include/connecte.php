@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
-$username = "root";
-$password = "root";
-$database = "test";
+$username = "phpmyadmin";
+$password = "tp";
+$database = "enigmatech";
 
 $conn = new mysqli($host, $username, $password, $database);
 
