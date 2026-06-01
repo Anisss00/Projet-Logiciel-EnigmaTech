@@ -1,13 +1,17 @@
 <?php
+
 session_start();
+
 require_once './include/connecte.php';
 include './include/verifConnect.php';
 
 $page_title = $page_title ?? "Administration";
+
 include './include/header.php';
 
 
-/* AJOUT utilisateur */
+/* ── Ajout utilisateur ─────────────────────────────── */
+
 $message = '';
 $error = '';
 
@@ -19,6 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_utilisateur']
     $password = $_POST['password'] ?? '';
     $role = $_POST['role'] ?? '';
     $dateNaiss = $_POST['dateNaiss'] ?? '';
+
+    // Admin peut choisir n'importe quelle société, les autres héritent de la leur
     if ($_SESSION['user_role'] === 'Admin') {
         $idOperateur = $_POST['IdOperateur'] ?? '';
     } else {
@@ -26,27 +32,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_utilisateur']
     }
 
     $mdpHash = password_hash($password, PASSWORD_DEFAULT);
-
-
-    $stmt = $conn->prepare("INSERT INTO utilisateur (nom, prenom, pseudo, mdp, email, dateNaissance, role, IdOperateur) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ");
     $pseudo = strtolower($prenom . "." . $nom);
 
+    $stmt = $conn->prepare("
+        INSERT INTO utilisateur (nom, prenom, pseudo, mdp, email, dateNaissance, role, IdOperateur)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ");
     $stmt->bind_param("sssssssi", $nom, $prenom, $pseudo, $mdpHash, $email, $dateNaiss, $role, $idOperateur);
 
     if ($stmt->execute()) {
-
         $message = "Utilisateur ajouté avec succès.";
-
     } else {
-
         $error = "Erreur SQL : " . $stmt->error;
-
     }
 
     $stmt->close();
 }
 
-/* AJOUT SOCIÉTÉ*/
+
+/* ── Ajout société (Admin uniquement) ──────────────── */
+
 $messageSociete = '';
 $errorSociete = '';
 
@@ -57,8 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_societe'])) {
     $telephone = trim($_POST['telephone'] ?? '');
     $email = trim($_POST['email'] ?? '');
 
-    $stmtSociete = $conn->prepare("INSERT INTO societe(nomSociete, email, adresse, telephone) VALUES (?, ?, ?, ?)");
-
+    $stmtSociete = $conn->prepare("
+        INSERT INTO societe (nomSociete, email, adresse, telephone)
+        VALUES (?, ?, ?, ?)
+    ");
     $stmtSociete->bind_param("ssss", $nomSociete, $email, $adresse, $telephone);
 
     if ($stmtSociete->execute()) {
@@ -66,11 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_societe'])) {
     } else {
         $errorSociete = "Erreur SQL : " . $stmtSociete->error;
     }
+
     $stmtSociete->close();
-
 }
-
-
 
 ?>
 
@@ -111,30 +116,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_societe'])) {
                 <option value="Opérateur">Opérateur</option>
             </select>
 
+            <?php if ($_SESSION['user_role'] === 'Admin'): ?>
 
-            <?php
-            if ($_SESSION['user_role'] === 'Admin') {
-                $querySociete = "SELECT IdOperateur, nomSociete FROM societe";
-                $resultSociete = $conn->query($querySociete); ?>
+                <?php
+                $resultSociete = $conn->query("SELECT IdOperateur, nomSociete FROM societe");
+                ?>
 
                 <label>Société</label>
                 <select name="IdOperateur" required>
-                    <?php while ($societe = $resultSociete->fetch_assoc()) { ?>
+                    <?php while ($societe = $resultSociete->fetch_assoc()): ?>
                         <option value="<?= $societe['IdOperateur'] ?>">
                             <?= htmlspecialchars($societe['nomSociete']) ?>
-                        </option> <?php } ?>
-                <?php } ?>
-            </select>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
 
-            <button type="submit" name="ajouter_utilisateur">
-                Ajouter
-            </button>
+            <?php endif; ?>
+
+            <button type="submit" name="ajouter_utilisateur">Ajouter</button>
 
         </form>
 
     </div>
 
-    <?php if ($_SESSION['user_role'] === 'Admin') { ?>
+
+    <?php if ($_SESSION['user_role'] === 'Admin'): ?>
 
         <div class="container">
 
@@ -162,20 +168,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_societe'])) {
                 <label>Email</label>
                 <input type="email" name="email" required>
 
-                <button type="submit" name="ajouter_societe">
-                    Ajouter la société
-                </button>
+                <button type="submit" name="ajouter_societe">Ajouter la société</button>
 
             </form>
 
         </div>
 
-    <?php } ?>
-
-
+    <?php endif; ?>
 
 </body>
 
-<?php
-include './include/footer.php';
-?>
+<?php include './include/footer.php'; ?>
